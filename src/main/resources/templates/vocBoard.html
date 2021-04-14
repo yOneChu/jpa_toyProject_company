@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title> PDM, CREO, 3D설계 VOC </title>
+
+    <!-- <link rel="stylesheet" href="/Windchill/jsp/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/Windchill/jsp/css/all.min.css">
+	<link rel="stylesheet" href="/Windchill/jsp/css/adminlte.min.css"> -->
+
+    <!-- <link rel="stylesheet" href="/Windchill/jsp/resource/plugins/fontawesome-free/css/all.min.css"> -->
+
+
+    <!-- Google Font: Source Sans Pro -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> -->
+
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- 	<link rel="stylesheet" href="/Windchill/jsp/resource/dist/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+
+
+    <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+</head>
+
+
+<body class="hold-transition sidebar-mini">
+
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+
+    </nav>
+    <!-- /.navbar -->
+
+
+
+
+    <!-- 왼쪽 사이드 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link">
+            <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Dashboard</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user (optional) -->
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <li class="nav-item">
+                            <a href="/contextList" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Context 현황</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/board" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>VOC 관리</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>3 Phase 개선</p>
+                            </a>
+                        </li>
+                    </li>
+
+
+
+
+                </ul>
+
+
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+
+
+    <!-- 내용 -->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>PDM, CREO, 3D설계 VOC</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">DataTables</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h3 class="card-title">DataTable with default features</h3>
+
+                                <button type="button" class="btn btn-secondary float-right" data-toggle="modal" data-target="#modal-lg">
+                                    등록
+                                </button>
+
+                            </div>
+                            <!-- /.card-header -->
+
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>구분</th>
+                                        <th>요청내용</th>
+                                        <th>요청자</th>
+                                        <th>담당자</th>
+                                        <th>원인</th>
+                                        <th>처리완료여부</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    <!--<c:forEach items="${boards}" var="dto">
+                                        <tr>
+                                            <td>${dto.gubunStatus}</td>
+                                            <td>${dto.reqContent}</td>
+                                            <td>${dto.administrator}</td>
+                                        </tr>
+                                    </c:forEach>-->
+
+
+                                    <tr th:each="board : ${boards}">
+                                        <td th:text="${board.gubunStatus}"></td>
+                                        <td th:text="${board.reqContent}"></td>
+                                        <td th:text="${board.administrator}"></td>
+                                        <td th:text="${board.administrator}"></td>
+                                        <td th:text="${board.administrator}"></td>
+                                        <td th:text="${board.administrator}"></td>
+
+                                    </tr>
+
+
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+
+
+
+
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+
+
+    </div>
+    <!-- /.content-wrapper -->
+
+
+
+
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b> 3.1.0-rc
+        </div>
+        <strong>Copyright &copy; 2021 <a href="#">HYOSUNG</a>.</strong> All rights reserved.
+    </footer>
+
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+</div>
+<!-- ./wrapper  -->
+
+<%--등록 Modal--%>
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">등록</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="gubunStatus" class="col-sm-2 col-form-label">구분</label>
+                    <div class="col-sm-10">
+                        <select id="gubunStatus" class="custom-select rounded-0">
+                            <option value="OFFLINE">OFFLINE</option>
+                            <option value="BASE">BASE</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="targetsw" class="col-sm-2 col-form-label">대상SW</label>
+                    <div class="col-sm-10">
+                        <input id="targetsw" type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="reqContent" class="col-sm-2 col-form-label">요청내용</label>
+                    <div class="col-sm-10">
+                        <textarea id="reqContent" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="requestor" class="col-sm-2 col-form-label">요청자</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="requestor" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="administrator" class="col-sm-2 col-form-label">담당자</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="administrator" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="cause" class="col-sm-2 col-form-label">원인</label>
+                    <div class="col-sm-10">
+                        <textarea id="cause" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="comContent" class="col-sm-2 col-form-label">처리내역</label>
+                    <div class="col-sm-10">
+                        <textarea id="comContent" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="createBtn">Save</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+
+
+<!--등록 Modal-->
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">등록</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="gubunStatus" class="col-sm-2 col-form-label">구분</label>
+                    <div class="col-sm-10">
+                        <select id="gubunStatus" class="custom-select rounded-0">
+                            <option value="OFFLINE">OFFLINE</option>
+                            <option value="BASE">BASE</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="targetsw" class="col-sm-2 col-form-label">대상SW</label>
+                    <div class="col-sm-10">
+                        <input id="targetsw" type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="reqContent" class="col-sm-2 col-form-label">요청내용</label>
+                    <div class="col-sm-10">
+                        <textarea id="reqContent" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="requestor" class="col-sm-2 col-form-label">요청자</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="requestor" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="administrator" class="col-sm-2 col-form-label">담당자</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="administrator" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="cause" class="col-sm-2 col-form-label">원인</label>
+                    <div class="col-sm-10">
+                        <textarea id="cause" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="comContent" class="col-sm-2 col-form-label">처리내역</label>
+                    <div class="col-sm-10">
+                        <textarea id="comContent" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="createBtn">Save</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/plugins/jszip/jszip.min.js"></script>
+<script src="/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/dist/js/demo.js"></script>
+<script>
+
+    $(document).ready(function() {
+
+        console.log('start');
+
+        $("#example1").DataTable({
+            //"ajax": "/api/v3/boards",
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+           /* "buttons": [
+                "copy", "csv", "excel", "pdf", "print", "colvis"
+               /!* , { // button추가
+                    text: '등록',
+                    action: function(e, dt, node, config) {
+                        alert('button');
+                    }
+                }*!/
+            ]*/
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+
+
+        $('#createBtn').click(function() {
+            let gubunStatus = $('#gubunStatus').val();
+            let targetsw = $('#targetsw').val();
+            let reqContent = $('reqContent').val();
+            let requestor = $('#requestor').val();
+            let administrator = $('#administrator').val();
+            let cause = $('#cause').val();
+            let comContent = $('#comContent').val();
+
+
+            console.log('comContent :: ', comContent);
+
+            //등록
+
+        });
+
+
+    $('#createBtn').click(function() {
+            let gubunStatus = $('#gubunStatus').val();
+            let targetsw = $('#targetsw').val();
+            let reqContent = $('reqContent').val();
+            let requestor = $('#requestor').val();
+            let administrator = $('#administrator').val();
+            let cause = $('#cause').val();
+            let comContent = $('#comContent').val();
+
+
+            console.log('comContent :: ', comContent);
+
+            //등록
+
+        });
+
+
+    });
+
+</script>
+
+
+
+
+</body>
+</html>

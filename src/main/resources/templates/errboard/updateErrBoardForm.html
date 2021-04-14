@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title> PDM, CREO, 3D설계 VOC </title>
+
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+
+    <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+</head>
+
+<body>
+<div class="container">
+
+    <form th:object="${form}" method="post">
+        <!-- id -->
+        <input type="hidden" th:field="*{id}" />
+        <div class="modal-header">
+            <h4 class="modal-title">등록</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <div class="form-group row">
+                <label for="gubunStatus" class="col-sm-2 col-form-label">구분</label>
+                <div class="col-sm-10">
+                    <select id="gubunStatus" th:field="*{gubunStatus}" class="custom-select rounded-0">
+                        <option value="OFFLINE">OFFLINE</option>
+                        <option value="BASE">BASE</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="targetsw" class="col-sm-2 col-form-label">대상SW</label>
+                <div class="col-sm-10">
+                    <!--placeholder="Email"-->
+                    <input id="targetsw" th:field="*{targetsw}" type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="reqContent" class="col-sm-2 col-form-label">요청내용</label>
+                <div class="col-sm-10">
+                    <textarea id="reqContent" th:field="*{reqContent}" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="requestor" class="col-sm-2 col-form-label">요청자</label>
+                <div class="col-sm-10">
+                    <input type="text" th:field="*{requestor}" id="requestor" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="administrator" class="col-sm-2 col-form-label">담당자</label>
+                <div class="col-sm-10">
+                    <input type="text" th:field="*{administrator}" id="administrator" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="cause" class="col-sm-2 col-form-label">원인</label>
+                <div class="col-sm-10">
+                    <textarea id="cause" th:field="*{cause}" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="comContent" class="col-sm-2 col-form-label">처리내역</label>
+                <div class="col-sm-10">
+                    <textarea id="comContent" th:field="*{comContent}" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer justify-content-between">
+            <button type="button" id="pClose" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="createBtn">수정</button>
+        </div>
+    </form>
+
+</div> <!-- /container -->
+
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        console.log('## start');
+
+        $('#pClose').click(function() {
+
+            opener.parent.location.reload();
+            window.close();
+        });
+
+    });
+</script>
+</body>
+</html>
