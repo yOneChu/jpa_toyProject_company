@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Table(name = "improveBoard")
 public class ImproveBoard {
 
+
     @Id
     @GeneratedValue
     @Column(name = "board_id")

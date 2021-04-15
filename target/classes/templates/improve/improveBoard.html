@@ -44,14 +44,14 @@
         <div class="sidebar">
             <!-- Sidebar user (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-    <!--
+                <!--
                 <div class="image">
                 <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
                 <div class="info">
                     <a href="#" class="d-block">Alexander Pierce</a>
                 </div>
-             -->
+                -->
             </div>
 
             <!-- Sidebar Menu -->
@@ -69,26 +69,23 @@
                         </a>
                         <ul class="nav nav-treeview" style="display: block;">
                             <li class="nav-item">
-                                <a href="/board" class="nav-link active">
+                                <a href="/board" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>VOC 관리</p>
                                 </a>
                             </li>
-                           <!--
-                           <li class="nav-item">
-                                <a href="/contextList" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Context별 조회</p>
-                                </a>
-                            </li>
-                            -->
+                            <!-- <li class="nav-item">
+                                 <a href="/contextList" class="nav-link">
+                                     <i class="far fa-circle nav-icon"></i>
+                                     <p>Context별 조회</p>
+                                 </a>
+                             </li>-->
                             <li class="nav-item">
-                                <a href="/improve" class="nav-link">
+                                <a href="/improve" class="nav-link active">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>3 Phase 개선</p>
                                 </a>
                             </li>
-
                             <!--
                             <li class="nav-item">
                                 <a href="../../index3.html" class="nav-link">
@@ -123,7 +120,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>PDM, CREO, 3D설계 VOC</h1>
+                        <h1>3차 개선항목 리스트</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -174,14 +171,13 @@
                                     <tr>
                                         <th>NO</th>
                                         <th>구분</th>
-                                        <th>SW</th>
-                                        <th>요청내용</th>
+                                        <th>유형</th>
+                                        <th>항목</th>
 
-                                        <th>요청자</th>
-                                        <th>담당자</th>
+                                        <th>개선필요항목</th>
                                         <th>원인</th>
-                                        <th>처리내용</th>
-                                        <th></th>
+                                        <th>상세내용</th>
+                                        <th>비고</th>
                                     </tr>
                                     </thead>
 
@@ -190,18 +186,29 @@
                                     <tbody>
                                     <tr th:each="board : ${boards}">
                                         <td th:text="${board.id}"></td>
-                                        <td th:text="${board.gubunStatus}"></td>
-                                        <td th:text="${board.targetsw}"></td>
-                                        <td th:text="${board.reqContent}"></td>
+                                        <td th:text="${board.gubun}"></td>
+                                        <td th:text="${board.typename}"></td>
+                                        <td th:text="${board.category}"></td>
 
-                                        <td th:text="${board.requestor}"></td>
-                                        <td th:text="${board.administrator}"></td>
+                                        <!--<td>
+                                            <textarea th:value="${board.improveContent}" th:text="${board.improveContent}"></textarea>
+                                        </td>-->
+
+                                        <td th:text="${board.improveContent}"></td>
+
                                         <td th:text="${board.cause}"></td>
-                                        <td th:text="${board.comContent}"></td>
+                                        <td th:text="${board.detail}"></td>
+                                        <td th:text="${board.memo}"></td>
+
+
+                                        <!--  <td>
+                                              &lt;!&ndash;<a href="#" th:href="@{/board/{id}/edit (id=${board.id})}" class="btn btn-primary" role="button">수정</a>&ndash;&gt;
+                                              <a th:onclick="|javascript:detail('${board.id}')|" class="btn btn-primary" role="button">상세보기</a>
+                                          </td>-->
 
                                         <td>
                                             <!--<a href="#" th:href="@{/board/{id}/edit (id=${board.id})}" class="btn btn-primary" role="button">수정</a>-->
-                                            <a th:onclick="|javascript:detail('${board.id}')|" class="btn btn-primary" role="button">수정</a>
+                                            <a th:onclick="|javascript:update('${board.id}')|" class="btn btn-primary" role="button">상세보기</a>
                                         </td>
                                     </tr>
 
@@ -264,7 +271,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <!--<form th:action="@{/board/save}" th:object="${form}" method="post">-->
-            <form th:action="@{/board/save}" th:object="${form}" method="post">
+            <form th:action="@{/improve/save}" th:object="${form}" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">등록</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -274,41 +281,31 @@
 
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label for="gubunStatus" class="col-sm-2 col-form-label">구분</label>
+                        <label for="gubun" class="col-sm-2 col-form-label">구분</label>
                         <div class="col-sm-10">
-                            <select id="gubunStatus" th:field="*{gubunStatus}" class="custom-select rounded-0">
-                                <option value="OFFLINE">OFFLINE</option>
-                                <option value="BASE">BASE</option>
-                            </select>
+                            <input id="gubun" th:field="*{gubun}" type="text" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="targetsw" class="col-sm-2 col-form-label">대상SW</label>
+                        <label for="typename" class="col-sm-2 col-form-label">유형</label>
                         <div class="col-sm-10">
                             <!--placeholder="Email"-->
-                            <input id="targetsw" th:field="*{targetsw}" type="text" class="form-control">
+                            <input id="typename" th:field="*{typename}" type="text" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="reqContent" class="col-sm-2 col-form-label">요청내용</label>
+                        <label for="category" class="col-sm-2 col-form-label">항목</label>
                         <div class="col-sm-10">
-                            <textarea id="reqContent" th:field="*{reqContent}" class="form-control" rows="3"></textarea>
+                            <input id="category" th:field="*{category}" type="text" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="requestor" class="col-sm-2 col-form-label">요청자</label>
+                        <label for="improveContent" class="col-sm-2 col-form-label">개선필요항목</label>
                         <div class="col-sm-10">
-                            <input type="text" th:field="*{requestor}" id="requestor" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="administrator" class="col-sm-2 col-form-label">담당자</label>
-                        <div class="col-sm-10">
-                            <input type="text" th:field="*{administrator}" id="administrator" class="form-control">
+                            <textarea id="improveContent" th:field="*{improveContent}" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
 
@@ -320,9 +317,16 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="comContent" class="col-sm-2 col-form-label">처리내역</label>
+                        <label for="detail" class="col-sm-2 col-form-label">상세내용</label>
                         <div class="col-sm-10">
-                            <textarea id="comContent" th:field="*{comContent}" class="form-control" rows="3"></textarea>
+                            <textarea id="detail" th:field="*{detail}" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="memo" class="col-sm-2 col-form-label">비고</label>
+                        <div class="col-sm-10">
+                            <textarea id="memo" th:field="*{memo}" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
@@ -439,20 +443,25 @@
     }); // end ready
 
 
-
+    // 상세
     function detail(id) {
-        //alert('detail' +  id);
         console.log('detail : ', id );
 
         let url = '/board/' + id + '/edit'
         window.open(url, 'test', 'width=550,height=800');
+    }
+
+    // 수정
+    function update(id) {
+        //alert('detail' +  id);
+        console.log('detail : ', id );
+
+        let url = '/improve/' + id + '/edit'
+        window.open(url, 'test', 'width=1000,height=850');
         //window.open('/board/22/edit', 'test', 'width=500,height=600');
     }
 
 </script>
-
-
-
 
 
 </body>
